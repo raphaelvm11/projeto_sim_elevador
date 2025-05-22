@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Elevador Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Slide 1 - Título */
+        .title-slide {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            text-align: center;
+            padding: 80px 40px;
+            position: relative;
+        }
+
+        .title-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="2" height="100" x="20" fill="rgba(255,255,255,0.1)"/><rect width="2" height="100" x="40" fill="rgba(255,255,255,0.05)"/><rect width="2" height="100" x="60" fill="rgba(255,255,255,0.1)"/><rect width="2" height="100" x="80" fill="rgba(255,255,255,0.05)"/></svg>');
+        }
+
+        .title-slide h1 {
+            font-size: 3.2rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-slide .description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 50px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .authors {
+            background: rgba(255,255,255,0.15);
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subject {
+            margin-top: 30px;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Slide 2 - Objetivos */
+        .objectives-slide {
+            padding: 60px;
+        }
+
+        .objectives-slide h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .objective-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .objective-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .objective-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .objective-card p {
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Slide 3 - Sistema */
+        .system-slide {
+            padding: 60px;
+            background: #f8f9fa;
+        }
+
+        .system-slide h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .system-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .system-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .system-text ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .system-text li {
+            padding: 15px 0;
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .system-visual {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            height: 400px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Slide 4 - Componentes */
+        .components-slide {
+            padding: 60px;
+        }
+
+        .components-slide h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .component-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .component-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .component-card h3 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .component-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Slide 5 - Algoritmos */
+        .algorithms-slide {
+            padding: 60px;
+            background: #f8f9fa;
+        }
+
+        .algorithms-slide h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .algorithms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .algorithm-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .algorithm-card h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .algorithm-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .algorithm-card .benefit {
+            background: #e8f5e8;
+            color: #2d5a2d;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Slide 6 - Funcionamento */
+        .operation-slide {
+            padding: 60px;
+        }
+
+        .operation-slide h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .operation-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step-card h3 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .step-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Slide 7 - Resultados */
+        .results-slide {
+            padding: 60px;
+            background: #f8f9fa;
+        }
+
+        .results-slide h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .results-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+
+        .results-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .results-table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .results-table td {
+            padding: 18px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 1rem;
+        }
+
+        .results-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .results-table tr:hover {
+            background: #e3f2fd;
+        }
+
+        /* Slide 8 - Análise */
+        .analysis-slide {
+            padding: 60px;
+        }
+
+        .analysis-slide h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .analysis-content {
+            display: grid;
+            gap: 30px;
+        }
+
+        .analysis-item {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .analysis-item h3 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .analysis-item p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .conclusion {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .conclusion p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Slide 9 - Obrigado */
+        .thanks-slide {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            text-align: center;
+            padding: 150px 40px;
+        }
+
+        .thanks-slide h2 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .thanks-slide p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                margin: 20px 0;
+            }
+            
+            .title-slide {
+                padding: 50px 30px;
+            }
+            
+            .title-slide h1 {
+                font-size: 2.5rem;
+            }
+            
+            .objectives-slide, .system-slide, .components-slide, 
+            .algorithms-slide, .operation-slide, .results-slide, .analysis-slide {
+                padding: 40px 30px;
+            }
+            
+            .system-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .components-grid, .algorithms-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .operation-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Título -->
+        <div class="slide title-slide">
+            <h1>Sistema de Controle de Elevador Inteligente</h1>
+            <div class="description">
+                Este simulador de elevador inteligente foi desenvolvido para modelar o funcionamento de sistemas de transporte vertical em edifícios com múltiplos andares. O projeto implementa algoritmos de otimização com foco em eficiência energética através da classe UnidadeDeEnergia, utilizando FilaDePrioridade para gerenciamento otimizado de passageiros e interface gráfica interativa em Java Swing.
+            </div>
+            <div class="authors">Carlos Raphael e Marcus Vinicius</div>
+            <div class="subject">Disciplina: Estrutura de Dados</div>
+        </div>
+
+        <!-- Slide 2: Objetivos -->
+        <div class="slide objectives-slide">
+            <h2>Objetivos do Projeto</h2>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>Arquitetura do Sistema</h3>
+                    <p>Compreender a estrutura modular do simulador, incluindo interface gráfica interativa e controle de eventos em tempo real.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Algoritmos de Otimização</h3>
+                    <p>Implementar e comparar diferentes estratégias de controle para maximizar eficiência no atendimento de chamadas.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Análise de Performance</h3>
+                    <p>Avaliar métricas de desempenho através de simulações controladas e análise estatística dos resultados obtidos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Descrição do Sistema -->
+        <div class="slide system-slide">
+            <h2>Visão Geral do Sistema</h2>
+            <div class="system-content">
+                <div class="system-text">
+                    <ul>
+                        <li>Sistema desenvolvido em Java com EntidadeSimulavel como classe base abstrata, permitindo arquitetura extensível e modular</li>
+                        <li>Controle temporal gerenciado pela classe Simulador, integrando CentralDeControle e ElevadorInterface para operação coordenada</li>
+                        <li>Interface gráfica implementada com Java Swing na classe ElevadorInterface, oferecendo visualização em tempo real com controles de pausa</li>
+                        <li>Monitoramento energético através da UnidadeDeEnergia com métricas de consumo total e médio por segundo de operação</li>
+                    </ul>
+                </div>
+                <div class="system-visual">
+                    Sistema de Simulação<br>
+                    Tempo Real
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Componentes -->
+        <div class="slide components-slide">
+            <h2>Arquitetura dos Componentes</h2>
+            <div class="components-grid">
+                <div class="component-card">
+                    <h3>Main.java</h3>
+                    <p>Classe principal que inicializa o sistema com validação de parâmetros e tratamento de exceções completo.</p>
+                </div>
+                <div class="component-card">
+                    <h3>Simulador.java</h3>
+                    <p>Coordena a simulação integrando CentralDeControle, UnidadeDeEnergia e ElevadorInterface em um sistema coeso.</p>
+                </div>
+                <div class="component-card">
+                    <h3>CentralDeControle.java</h3>
+                    <p>Implementa as decisões estratégicas sobre distribuição otimizada de elevadores e gerenciamento de filas de prioridade.</p>
+                </div>
+                <div class="component-card">
+                    <h3>ElevadorInterface.java</h3>
+                    <p>Interface gráfica Swing com visualização em tempo real dos elevadores, filas e controles de pausa/início.</p>
+                </div>
+                <div class="component-card">
+                    <h3>DestinoPrioritario.java</h3>
+                    <p>Algoritmo para calcular o andar alvo otimizado baseado na menor distância entre passageiros no elevador.</p>
+                </div>
+                <div class="component-card">
+                    <h3>EntidadeSimulavel.java</h3>
+                    <p>Classe abstrata base que define o contrato para entidades que precisam ser atualizadas durante a simulação.</p>
+                </div>
+                <div class="component-card">
+                    <h3>ConfiguracaoSistema.java</h3>
+                    <p>Gerencia configurações do sistema incluindo tipos de painel externo e parâmetros de inicialização.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Algoritmos -->
+        <div class="slide algorithms-slide">
+            <h2>Algoritmos Implementados</h2>
+            <div class="algorithms-grid">
+                <div class="algorithm-card">
+                    <h3>DestinoPrioritario</h3>
+                    <p>Calcula o andar alvo baseado na menor distância entre o andar atual e os destinos dos passageiros no elevador.</p>
+                    <div class="benefit">Otimiza trajetos minimizando deslocamentos desnecessários e reduzindo tempo de viagem.</div>
+                </div>
+                <div class="algorithm-card">
+                    <h3>FilaDePrioridade</h3>
+                    <p>Estrutura de dados que gerencia passageiros com priorização para idosos e cadeirantes através do sistema de filas.</p>
+                    <div class="benefit">Garante atendimento preferencial para pessoas com necessidades especiais.</div>
+                </div>
+                <div class="algorithm-card">
+                    <h3>UnidadeDeEnergia</h3>
+                    <p>Sistema de monitoramento energético que calcula consumo total e médio, fornecendo métricas de eficiência operacional.</p>
+                    <div class="benefit">Permite análise de sustentabilidade e otimização do consumo energético do sistema.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Funcionamento -->
+        <div class="slide operation-slide">
+            <h2>Fluxo de Funcionamento</h2>
+            <div class="operation-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Inicialização do Sistema</h3>
+                    <p>Main.java valida parâmetros de entrada e inicializa ConfiguracaoSistema com quantidade de elevadores, andares e tempo simulado.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Controle da Simulação</h3>
+                    <p>CentralDeControle gerencia FilaDePrioridade por andar e coordena movimento dos elevadores com base em DestinoPrioritario.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Interface Gráfica</h3>
+                    <p>ElevadorInterface atualiza visualização em tempo real, mostrando posição dos elevadores e quantidade de pessoas nas filas.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Monitoramento Energético</h3>
+                    <p>UnidadeDeEnergia registra consumo total e calcula métricas de eficiência durante toda a operação do sistema.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Resultados -->
+        <div class="slide results-slide">
+            <h2>Métricas de Performance</h2>
+            <div class="results-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Algoritmo</th>
+                            <th>Tempo Total (s)</th>
+                            <th>Usuários</th>
+                            <th>Espera Média (s)</th>
+                            <th>Tempo Viagem (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Configuração Padrão</strong></td>
+                            <td>40</td>
+                            <td>2 elevadores, 9 andares</td>
+                            <td>92,30</td>
+                            <td>1,85</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DestinoPrioritario</strong></td>
+                            <td>35</td>
+                            <td>2 elevadores, 9 andares</td>
+                            <td>88,45</td>
+                            <td>2,12</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sistema Otimizado</strong></td>
+                            <td>28</td>
+                            <td>2 elevadores, 9 andares</td>
+                            <td>95,20</td>
+                            <td>2,45</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 8: Análise -->
+        <div class="slide analysis-slide">
+            <h2>Análise Comparativa dos Resultados</h2>
+            <div class="analysis-content">
+                <div class="analysis-item">
+                    <h3>Configuração Padrão</h3>
+                    <p>Sistema básico operando com 2 elevadores em 9 andares apresenta desempenho estável, mas com potencial para otimizações específicas em cenários de maior demanda.</p>
+                </div>
+                <div class="analysis-item">
+                    <h3>DestinoPrioritario</h3>
+                    <p>Algoritmo de priorização por menor distância demonstra redução significativa no tempo total de simulação, otimizando trajetos dos elevadores de forma inteligente.</p>
+                </div>
+                <div class="analysis-item">
+                    <h3>Sistema Otimizado</h3>
+                    <p>Configuração avançada com FilaDePrioridade e UnidadeDeEnergia integradas apresenta os melhores resultados em eficiência temporal e monitoramento energético.</p>
+                </div>
+                <div class="conclusion">
+                    <p>A arquitetura baseada em EntidadeSimulavel permite extensibilidade futura, incluindo implementações de machine learning para predição de fluxo e integração IoT para controle adaptativos baseados em dados reais de ocupação.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Obrigado -->
+        <div class="slide thanks-slide">
+            <h2>Obrigado!</h2>
+            <p>Carlos Raphael e Marcus Vinicius</p>
+        </div>
+    </div>
+</body>
+</html>
